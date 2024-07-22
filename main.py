@@ -22,7 +22,6 @@ logger = logging.getLogger(__name__)
 WELCOME, QUESTION, CANCEL, CORRECT, GOODBYE, CHAT, ANIME_RECOMMENDATION, QUOTE, FACT = range(9)
 # Entry function
 
-
 async def start(update: Update, context: CallbackContext) -> int:
     """Send a welcome message and prompt user to start the quiz."""
     await update.message.reply_text(
@@ -187,6 +186,13 @@ async def cancel(update: Update, context: CallbackContext) -> int:
     )
     return ConversationHandler.END
 
+# Custom handler for "allah" input
+async def custom_allah(update: Update, context: CallbackContext) -> None:
+    await update.message.reply_text("1... a single point of focus in the vast network of connections.")
+
+# Custom handler for "bö" input
+async def custom_bo(update: Update, context: CallbackContext) -> None:
+    await update.message.reply_text("Allah... you startled me, but in the Wired, surprises are just connections we didn't expect.")
 
 def main() -> None:
     """Start the bot."""
@@ -216,7 +222,9 @@ def main() -> None:
             CommandHandler('chat', chat),
             CommandHandler('anime', anime_recommendation),
             CommandHandler('quote', quote),
-            CommandHandler('fact', fact)
+            CommandHandler('fact', fact),
+            MessageHandler(filters.Regex(r'^allah$'), custom_allah),
+            MessageHandler(filters.Regex(r'^bö$'), custom_bo)
         ],
     )
 
